@@ -4,7 +4,28 @@
 </header>
 
 <main>
-  <div id="chart"></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Валюта</th>
+        <th>4 недели назад</th>
+        <th>3 недели назад</th>
+        <th>позапрошлая неделя</th>
+        <th>прошлая неделя</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @table_data.each do |col| %>
+        <tr>
+          <td><%= col[0] %></td>
+          <td><%= col[1] %></td>
+          <td><%= col[2] %></td>
+          <td><%= col[3] %></td>
+          <td><%= col[4] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
   <%= link_to "Rates charts", root_path, class: "button" %>
 </main>
 
