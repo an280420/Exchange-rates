@@ -1,16 +1,12 @@
 <header>
   <h1>ExchangeRates</h1>
-  <p>chart</p>
+  <p>USD/RUB EUR/RUB CYN/RUB charts</p>
 </header>
 
 <main>
   <div id="chart"></div>
   <%= link_to "Rates table", exchange_rates_table_path, class: "button" %>
 </main>
-
-<footer>
-  <p>Anton Nekrasov's website USD/RUB EUR/RUB CYN/RUB charts.</p>
-</footer>
 
 <script>
   <%= raw "var chartData = #{@chart_data.to_json};" %>
