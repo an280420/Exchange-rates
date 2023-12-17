@@ -50,7 +50,7 @@ class ExchangeRatesController < ApplicationController
 
       data[:data].each_cons(2) do |prev_week, current_week|
         difference_percentage = ((current_week[:value] - prev_week[:value]) / prev_week[:value] * 100).round(2)
-        row << "#{current_week[:value].round(2)}₽ (#{difference_percentage}%)"
+        row << "#{current_week[:value].round(2)}₽ (#{'+' if difference_percentage.positive?}#{difference_percentage}%)"
       end
 
       table_rows << row
