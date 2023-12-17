@@ -15,11 +15,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_17_091051) do
   enable_extension "plpgsql"
 
   create_table "currencies", force: :cascade do |t|
+    t.string "cbr_code", null: false
     t.string "code", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["code"], name: "index_currencies_on_code", unique: true
+    t.index ["cbr_code"], name: "index_currencies_on_cbr_code", unique: true
   end
 
   create_table "rates", force: :cascade do |t|
