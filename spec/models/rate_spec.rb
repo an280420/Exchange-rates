@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Rate, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'factory' do
+    it 'is valid' do
+      rate = build(:rate)
+      expect(rate).to be_valid
+    end
+  end
 end
