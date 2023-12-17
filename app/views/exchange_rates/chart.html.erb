@@ -1,3 +1,13 @@
-<h1>ExchangeRates#chart</h1>
-<p>Find me in app/views/exchange_rates/chart.html.erb</p>
-<div id="chart"></div>
+<header>
+  <h1>ExchangeRates</h1>
+  <p>chart</p>
+</header>
+
+<main>
+  <div id="chart"></div>
+  <%= link_to "Rates table", exchange_rates_table_path, class: "button" %>
+</main>
+
+<footer>
+  <p>Anton Nekrasov's website USD/RUB EUR/RUB CYN/RUB charts.</p>
+</footer>
