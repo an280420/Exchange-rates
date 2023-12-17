@@ -32,6 +32,9 @@ Create and initialize the database:
 
 ```bash
 $ bin/rails db:create db:migrate
+```
+Seed the database with currency rates for the last month:
+```bash
 $ bin/rails db:seed
 ```
 
