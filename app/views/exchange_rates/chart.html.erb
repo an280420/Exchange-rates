@@ -11,3 +11,7 @@
 <footer>
   <p>Anton Nekrasov's website USD/RUB EUR/RUB CYN/RUB charts.</p>
 </footer>
+
+<script>
+  <%= raw "var chartData = #{@chart_data.to_json};" %>
+</script>
