@@ -5,7 +5,7 @@ require 'nokogiri'
 # https://www.cbr.ru/scripts/XML_dynamic.asp?date_req1=16/11/2023&date_req2=16/12/2023&VAL_NM_RQ=R01235
 
 today = Date.today.strftime("%d/%m/%Y")
-month_ago = (Date.today.months_ago(1)).strftime("%d/%m/%Y")
+month_ago = Date.today.months_ago(1).beginning_of_week.strftime("%d/%m/%Y")
 
 #### currencies ####
 # name ----------------  cbr_code

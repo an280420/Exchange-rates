@@ -34,23 +34,32 @@ class ExchangeRatesController < ApplicationController
   end
 
   def table_data
-    rates = Rate.includes(:currency).where('date >= ?', 4.weeks.ago).order(:currency_id, :date)
+    rates_data = Rate.group_by_week_with_first_value
 
+    # hash with the value of the rates at the beginning of the weeks and the percentage change for each currency
     currencies_data = {}
+    rates_data.each do |week_start, currencies|
+      currencies.each do |currency_id, value|
+        currencies_data[currency_id] ||= { values: [], percentages: [] }
+        currencies_data[currency_id][:values] << { week_start: week_start, value: value }
 
-    rates.each do |rate|
-      currencies_data[rate.currency_id] ||= { currency: rate.currency, data: [] }
-      currencies_data[rate.currency_id][:data] << { date: rate.date, value: rate.value }
+        if currencies_data[currency_id][:values].length > 1
+          prev_value = currencies_data[currency_id][:values][-2][:value]
+          current_value = currencies_data[currency_id][:values][-1][:value]
+          percentage_change = ((current_value - prev_value) / prev_value * 100).round(2)
+          currencies_data[currency_id][:percentages] << { week_start: week_start, percentage: percentage_change }
+        end
+      end
     end
 
     table_rows = []
-
     currencies_data.each do |currency_id, data|
-      row = [data[:currency].code]
+      row = [Currency.find(currency_id).code]
 
-      data[:data].each_cons(2) do |prev_week, current_week|
-        difference_percentage = ((current_week[:value] - prev_week[:value]) / prev_week[:value] * 100).round(2)
-        row << "#{current_week[:value].round(2)}₽ (#{'+' if difference_percentage.positive?}#{difference_percentage}%)"
+      data[:values].each_with_index do |week_data, index|
+        percent = data[:percentages][index][:percentage].round(2) if index < data[:percentages].length
+        percent_as_text = " (#{'+' if percent.positive?}#{percent}%)" if percent 
+        row << "#{week_data[:value].round(2)}₽#{percent_as_text if percent_as_text}"
       end
 
       table_rows << row
